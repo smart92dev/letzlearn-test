@@ -9,6 +9,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <p className="text-3xl text-red-600">Hello! This is test string for tailwind css</p>
         <a
           className="App-link"
           href="https://reactjs.org"
