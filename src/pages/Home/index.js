@@ -24,7 +24,7 @@ export default function index() {
         {
           count === 1 ? 
           <PersonalDetail next={upCount} />:
-          <CourseDetail courseNo={count - 1} prev={downCount} next={upCount} />
+          <CourseDetail courseNo={count - 1} prev={downCount} next={upCount}/>
         }
       </div>
     </div>

@@ -1,10 +1,12 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { nextStep } from "../../action/stepAction";
 
 export default function index(props) {
   const max_count = process.env.REACT_APP_MAX_COUNT;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { courseNo, prev, next } = props;
   const numberArr = [
@@ -44,7 +46,6 @@ export default function index(props) {
   }, [courseNo]);
 
   useEffect(() => {
-    console.log('--here--', clickSubmit);
     if (clickSubmit === true)
       checkValidation();
   }, [level, name, skill, language]);
@@ -106,6 +107,16 @@ export default function index(props) {
     }
     setClickSubmit(true);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let res = checkValidation();
+    if (res === true){
+      setClickSubmit(false);
+      navigate('/detail');
+    }
+    setClickSubmit(true);
+  }
 
   return (
     <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-2xl shadow-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -234,7 +245,7 @@ export default function index(props) {
               </button>
               <button
                 className="w-full text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-2.5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                onClick={() => {}}
+                onClick={handleSubmit}
               >
                 Submit
               </button>
@@ -242,7 +253,7 @@ export default function index(props) {
             : 
             <button
               className="w-full ml-[140px] text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-2.5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              onClick={() => {}}
+              onClick={handleSubmit}
             >
               Submit
             </button>
