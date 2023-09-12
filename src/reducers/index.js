@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import articleReducer from './articleReducer';
-import searchReducer from './searchReducer';
+import userReducer from './userReducer';
+import courseReducer from './courseReducer';
 
 const rootReducer = combineReducers({
-  articlesState: articleReducer,
-  searchState: searchReducer,
+  userState: userReducer,
+  courseState: courseReducer,
 });
 
 export default rootReducer;
