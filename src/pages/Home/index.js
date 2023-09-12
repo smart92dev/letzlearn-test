@@ -6,7 +6,7 @@ import Stepper from '../../components/Stepper'
 import Sidebar from '../../components/Sidebar'
 
 export default function index() {
-  const [ count, setCount ] = useState(2);
+  const [ count, setCount ] = useState(1);
   const downCount = () => {
     setCount(count - 1);
   }

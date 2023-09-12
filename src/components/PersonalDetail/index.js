@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dialData from "../../data/dial.json";
 import stateData from "../../data/state.json";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,13 +9,25 @@ export default function index(props) {
   const { next } = props;
   const personalData = useSelector((state) => state.userState.userData);
   const dispatch = useDispatch();
-
+  const initialValidationData = {
+    name: '',
+    number: '',
+    emailId: '',
+    stateAddress: '',
+    country: '',
+  }
   const [name, setName] = useState(personalData.name);
   const [number, setNumber] = useState(personalData.number);
   const [emailId, setEmailId] = useState(personalData.emailId);
   const [country, setCountry] = useState(personalData.country);
   const [stateAddress, setStateAddress] = useState(personalData.stateAddress);
+  const [validation, setValidation] = useState(initialValidationData);
+  const [clickSubmit, setClickSubmit] = useState(false);
 
+  useEffect(() => {
+    if (clickSubmit === true)
+      checkValidation();
+  }, [name, emailId, stateAddress, country, number])
   const changeName = (e) => {
     setName(e.target.value);
   };
@@ -36,11 +48,58 @@ export default function index(props) {
     setStateAddress(e.target.value);
   };
 
-  const handleSubmit = () => {
-    dispatch(
-      submitPersonalData({ name, emailId, number, country, stateAddress })
-    );
-    next();
+  const isValidEmail = (email) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return regex.test(String(email).toLowerCase());
+  }
+
+  const checkValidation = () => {
+    let res = true;
+    let validationData = initialValidationData;
+    if (name === '')
+    {
+      validationData.name = "Please insert name."
+      res = false;
+    }
+    if (emailId === '')
+    {
+      validationData.email = "Please insert email."
+      res = false;
+    }
+    if (!isValidEmail(emailId))
+    {
+      validationData.emailId = "Please insert valid email."
+      res = false;
+    }
+    if (number === '')
+    {
+      validationData.number = "Please insert mobile number."
+      res = false;
+    }
+    if (stateAddress === '')
+    {
+      validationData.stateAddress = "Please insert state."
+      res = false
+    }
+    if (country === '')
+    {
+      validationData.country = "Please insert country."
+      res = false
+    }
+    setValidation(validationData);
+    return res;
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let res = checkValidation();
+    if (res === true){
+      dispatch(
+        submitPersonalData({ name, emailId, number, country, stateAddress })
+      );
+      next();
+    }
+    setClickSubmit(true);
   };
 
   return (
@@ -61,7 +120,7 @@ export default function index(props) {
           >
             Name*
           </label>
-          <div className="relative mb-6">
+          <div className="relative">
             <input
               type="text"
               onChange={(e) => changeName(e)}
@@ -88,6 +147,7 @@ export default function index(props) {
               </svg>
             </div>
           </div>
+          { validation.name !== '' ? <div className="text-red-600 font-bold text-left">{validation.name}</div> : <></>}
         </div>
         <div>
           <label
@@ -96,7 +156,7 @@ export default function index(props) {
           >
             Mobile number*
           </label>
-          <div className="relative mb-6">
+          <div className="relative">
             <select
               value={country}
               onChange={(e) => changeCountry(e)}
@@ -109,7 +169,7 @@ export default function index(props) {
               ))}
             </select>
             <input
-              type="text"
+              type="number"
               onChange={(e) => changeNumber(e)}
               value={number}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-main focus:outline-none block w-full pr-7 pl-[80px] p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -133,6 +193,7 @@ export default function index(props) {
               </svg>
             </div>
           </div>
+          { validation.number !== '' ? <div className="text-red-600 font-bold text-left">{validation.number}</div> : <></>}
         </div>
         <div>
           <label
@@ -149,6 +210,7 @@ export default function index(props) {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-main focus:outline-none block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           />
+          { validation.emailId !== '' ? <div className="text-red-600 font-bold text-left">{validation.emailId}</div> : <></>}
         </div>
         <div className="flex flex-row gap-2">
           <div>
@@ -196,9 +258,11 @@ export default function index(props) {
             />
           </div>
         </div>
+        { validation.stateAddress !== '' ? <div className="text-red-600 font-bold text-left">{validation.stateAddress}</div> : <></>}
+        { validation.country !== '' ? <div className="text-red-600 font-bold text-left">{validation.country}</div> : <></>}
         <button
           className="w-full text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          onClick={handleSubmit}
+          onClick={(e) => handleSubmit(e)}
         >
           Save & Next Step
         </button>
