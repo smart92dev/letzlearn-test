@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 export default function index(props) {
-  const { courseNo } = props;
+  const { courseNo, prev } = props;
   const numberArr = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
   const [level, setLevel] = useState("");
   const [name, setName] = useState("");
@@ -115,7 +115,7 @@ export default function index(props) {
           />
         </div>
         <div className="flex flex-row gap-1">
-          <span className="text-white text-[30px] w-[112px] pt-[7px] cursor-pointer bg-slate-300 hover:bg-main focus:ring-main focus:outline-none focus:bg-main font-medium rounded-[100px] text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <span onClick={() => prev()} className="text-white text-[30px] w-[112px] pt-[7px] cursor-pointer bg-slate-300 hover:bg-main focus:ring-main focus:outline-none focus:bg-main font-medium rounded-[100px] text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             &lt;
           </span>
           <button
