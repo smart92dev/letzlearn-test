@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { nextStep } from "../../action/stepAction";
 
 export default function index(props) {
+  const max_count = process.env.REACT_APP_MAX_COUNT;
   const dispatch = useDispatch();
   const { courseNo, prev, next } = props;
   const numberArr = [
@@ -39,9 +40,11 @@ export default function index(props) {
     setSkill(stepData[courseNo - 1].skill);
     setLanguage(stepData[courseNo - 1].language);
     setReason(stepData[courseNo - 1].reason);
+    setClickSubmit(false);
   }, [courseNo]);
 
   useEffect(() => {
+    console.log('--here--', clickSubmit);
     if (clickSubmit === true)
       checkValidation();
   }, [level, name, skill, language]);
@@ -98,6 +101,7 @@ export default function index(props) {
     let res = checkValidation();
     if (res === true){
       dispatch(nextStep({ level, name, skill, language, reason, courseNo }));
+      setClickSubmit(false);
       next();
     }
     setClickSubmit(true);
@@ -199,38 +203,50 @@ export default function index(props) {
           >
             &lt;
           </span>
-          <button
-            onClick={handleAddCourse}
-            className="flex flex-row items-center gap-2 w-full text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            <span>Add Course</span>
-            <span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="text-white"
-                viewBox="0 0 16 16"
+          {
+            courseNo < max_count ? 
+            <>
+              <button
+                onClick={handleAddCourse}
+                className="flex flex-row items-center gap-2 w-full text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
-                {" "}
-                <path
-                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                  fill="white"
-                ></path>{" "}
-                <path
-                  d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
-                  fill="white"
-                ></path>{" "}
-              </svg>
-            </span>
-          </button>
-          <button
-            className="w-full text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-2.5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            onClick={() => {}}
-          >
-            Submit
-          </button>
+                <span>Add Course</span>
+                <span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="text-white"
+                    viewBox="0 0 16 16"
+                  >
+                    {" "}
+                    <path
+                      d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                      fill="white"
+                    ></path>{" "}
+                    <path
+                      d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+                      fill="white"
+                    ></path>{" "}
+                  </svg>
+                </span>
+              </button>
+              <button
+                className="w-full text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-2.5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                onClick={() => {}}
+              >
+                Submit
+              </button>
+            </>
+            : 
+            <button
+              className="w-full ml-[140px] text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-2.5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              onClick={() => {}}
+            >
+              Submit
+            </button>
+          }
         </div>
       </form>
     </div>
