@@ -1,8 +1,11 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { nextStep } from "../../action/stepAction";
 
 export default function index(props) {
-  const { courseNo, prev } = props;
+  const dispatch = useDispatch();
+  const { courseNo, prev, next } = props;
   const numberArr = [
     "One",
     "Two",
@@ -15,11 +18,20 @@ export default function index(props) {
     "Nine",
     "Ten",
   ];
-  const [level, setLevel] = useState("");
-  const [name, setName] = useState("");
-  const [skill, setSkill] = useState("");
-  const [language, setLanguage] = useState("");
-  const [reason, setReason] = useState("");
+  const stepData = useSelector((state) => state.courseState.stepData);
+  const [level, setLevel] = useState(stepData[courseNo - 1].level);
+  const [name, setName] = useState(stepData[courseNo - 1].name);
+  const [skill, setSkill] = useState(stepData[courseNo - 1].skill);
+  const [language, setLanguage] = useState(stepData[courseNo - 1].language);
+  const [reason, setReason] = useState(stepData[courseNo - 1].reason);
+
+  useEffect(() => {
+    setLevel(stepData[courseNo - 1].level);
+    setName(stepData[courseNo - 1].name);
+    setSkill(stepData[courseNo - 1].skill);
+    setLanguage(stepData[courseNo - 1].language);
+    setReason(stepData[courseNo - 1].reason);
+  }, [courseNo]);
 
   const changeLevel = (e) => {
     setLevel(e.target.value);
@@ -40,6 +52,12 @@ export default function index(props) {
   const changeReason = (e) => {
     setReason(e.target.value);
   };
+
+  const handleAddCourse = () => {
+    dispatch(nextStep({ level, name, skill, language, reason, courseNo }));
+    next();
+  };
+
   return (
     <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-2xl shadow-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
       <form className="space-y-3" action="#">
@@ -118,7 +136,7 @@ export default function index(props) {
           >
             Why do u want to join us?
           </label>
-          <input
+          <textarea
             type="text"
             onChange={(e) => changeReason(e)}
             value={reason}
@@ -133,12 +151,10 @@ export default function index(props) {
             &lt;
           </span>
           <button
-            type="submit"
+            onClick={handleAddCourse}
             className="flex flex-row items-center gap-2 w-full text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            <span>
-              Add Course
-            </span>
+            <span>Add Course</span>
             <span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +176,10 @@ export default function index(props) {
               </svg>
             </span>
           </button>
-          <button className="w-full text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-2.5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <button
+            className="w-full text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-2.5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() => {}}
+          >
             Submit
           </button>
         </div>

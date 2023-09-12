@@ -6,10 +6,14 @@ import Stepper from '../../components/Stepper'
 import Sidebar from '../../components/Sidebar'
 
 export default function index() {
-  const [ count, setCount ] = useState(4);
+  const [ count, setCount ] = useState(2);
   const downCount = () => {
     setCount(count - 1);
   }
+  const upCount = () => {
+    setCount(count + 1);
+  }
+
   return (
     <div className="flex flex-row gap-5 mt-10 justify-center">
       <div className="flex flex-row gap-5 mt-10">
@@ -19,8 +23,8 @@ export default function index() {
       <div className="ml-[100px]">
         {
           count === 1 ? 
-          <PersonalDetail />:
-          <CourseDetail courseNo={count - 1} prev={downCount} />
+          <PersonalDetail next={upCount} />:
+          <CourseDetail courseNo={count - 1} prev={downCount} next={upCount} />
         }
       </div>
     </div>

@@ -2,13 +2,19 @@ import React from "react";
 import { useState } from "react";
 import dialData from "../../data/dial.json";
 import stateData from "../../data/state.json";
+import { useSelector, useDispatch } from "react-redux";
+import { submitPersonalData } from "../../action/userAction";
 
-export default function index() {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
-  const [emailId, setEmailId] = useState("");
-  const [country, setCountry] = useState("India");
-  const [stateAddress, setStateAddress] = useState("");
+export default function index(props) {
+  const { next } = props;
+  const personalData = useSelector((state) => state.userState.userData);
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState(personalData.name);
+  const [number, setNumber] = useState(personalData.number);
+  const [emailId, setEmailId] = useState(personalData.emailId);
+  const [country, setCountry] = useState(personalData.country);
+  const [stateAddress, setStateAddress] = useState(personalData.stateAddress);
 
   const changeName = (e) => {
     setName(e.target.value);
@@ -29,6 +35,14 @@ export default function index() {
   const changeStateAddress = (e) => {
     setStateAddress(e.target.value);
   };
+
+  const handleSubmit = () => {
+    dispatch(
+      submitPersonalData({ name, emailId, number, country, stateAddress })
+    );
+    next();
+  };
+
   return (
     <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-2xl shadow-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
       <form className="space-y-3" action="#">
@@ -183,8 +197,8 @@ export default function index() {
           </div>
         </div>
         <button
-          type="submit"
           className="w-full text-white bg-main hover:bg-purple-800 focus:ring-purple-800 focus:outline-none focus:bg-main font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          onClick={handleSubmit}
         >
           Save & Next Step
         </button>
