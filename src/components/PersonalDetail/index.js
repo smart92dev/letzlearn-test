@@ -139,7 +139,7 @@ export default function index() {
         <div className="flex flex-row gap-2">
           <div>
             <label
-              htmlFor="email id"
+              htmlFor="state"
               className="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               State*
@@ -168,7 +168,7 @@ export default function index() {
           </div>
           <div>
             <label
-              htmlFor="email id"
+              htmlFor="country"
               className="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Country*
