@@ -115,7 +115,7 @@ export default function index(props) {
           />
         </div>
         <div className="flex flex-row gap-1">
-          <span className="text-white text-[30px] w-[112px] pt-[7px] cursor-pointer bg-slate-400 hover:bg-main focus:ring-main focus:outline-none focus:bg-main font-medium rounded-[100px] text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <span className="text-white text-[30px] w-[112px] pt-[7px] cursor-pointer bg-slate-300 hover:bg-main focus:ring-main focus:outline-none focus:bg-main font-medium rounded-[100px] text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             &lt;
           </span>
           <button
