@@ -18,12 +18,20 @@ export default function index(props) {
     "Nine",
     "Ten",
   ];
+  const initialValidationData = {
+    level: '',
+    name: '',
+    skill: '',
+    language: '',
+  }
   const stepData = useSelector((state) => state.courseState.stepData);
   const [level, setLevel] = useState(stepData[courseNo - 1].level);
   const [name, setName] = useState(stepData[courseNo - 1].name);
   const [skill, setSkill] = useState(stepData[courseNo - 1].skill);
   const [language, setLanguage] = useState(stepData[courseNo - 1].language);
   const [reason, setReason] = useState(stepData[courseNo - 1].reason);
+  const [validation, setValidation] = useState(initialValidationData);
+  const [clickSubmit, setClickSubmit] = useState(false);
 
   useEffect(() => {
     setLevel(stepData[courseNo - 1].level);
@@ -32,6 +40,11 @@ export default function index(props) {
     setLanguage(stepData[courseNo - 1].language);
     setReason(stepData[courseNo - 1].reason);
   }, [courseNo]);
+
+  useEffect(() => {
+    if (clickSubmit === true)
+      checkValidation();
+  }, [level, name, skill, language]);
 
   const changeLevel = (e) => {
     setLevel(e.target.value);
@@ -53,9 +66,41 @@ export default function index(props) {
     setReason(e.target.value);
   };
 
-  const handleAddCourse = () => {
-    dispatch(nextStep({ level, name, skill, language, reason, courseNo }));
-    next();
+  const checkValidation = () => {
+    let res = true;
+    let validationData = initialValidationData;
+    if (level === '')
+    {
+      validationData.level = "Please insert course level."
+      res = false;
+    }
+    if (name === '')
+    {
+      validationData.name = "Please insert course name."
+      res = false;
+    }
+    if (skill === '')
+    {
+      validationData.skill = "Please insert expected skill."
+      res = false;
+    }
+    if (language === '')
+    {
+      validationData.language = "Please insert preferred language."
+      res = false
+    }
+    setValidation(validationData);
+    return res;
+  }
+
+  const handleAddCourse = (e) => {
+    e.preventDefault();
+    let res = checkValidation();
+    if (res === true){
+      dispatch(nextStep({ level, name, skill, language, reason, courseNo }));
+      next();
+    }
+    setClickSubmit(true);
   };
 
   return (
@@ -83,6 +128,7 @@ export default function index(props) {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-main focus:outline-none block w-full pr-7 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           />
+          { validation.level !== '' ? <div className="text-red-600 font-bold text-left">{validation.level}</div> : <></>}
         </div>
         <div>
           <label
@@ -98,6 +144,7 @@ export default function index(props) {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-main focus:outline-none block w-full pr-7 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           />
+          { validation.name !== '' ? <div className="text-red-600 font-bold text-left">{validation.name}</div> : <></>}
         </div>
         <div>
           <label
@@ -113,6 +160,7 @@ export default function index(props) {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-main focus:outline-none block w-full pr-7 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           />
+          { validation.skill !== '' ? <div className="text-red-600 font-bold text-left">{validation.skill}</div> : <></>}
         </div>
         <div>
           <label
@@ -128,6 +176,7 @@ export default function index(props) {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-main focus:outline-none block w-full pr-7 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           />
+          { validation.language !== '' ? <div className="text-red-600 font-bold text-left">{validation.language}</div> : <></>}
         </div>
         <div>
           <label
