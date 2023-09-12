@@ -26,9 +26,9 @@ export default function index(props) {
               {data}
             </span>
             {count - 1 === index ? (
-              <span className="w-[4px] ml-[13px] h-[100px] pt-[2px] bg-slate-300 block"></span>
+              <span className="w-[4px] ml-[13px] h-[80px] pt-[2px] bg-slate-300 block"></span>
             ) : (
-              <span className="w-[4px] ml-[13px] h-[100px] pt-[2px] bg-main block"></span>
+              <span className="w-[4px] ml-[13px] h-[80px] pt-[2px] bg-main block"></span>
             )}
           </div>
         ))

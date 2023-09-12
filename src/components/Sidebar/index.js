@@ -15,7 +15,7 @@ export default function index(props) {
     "Ten",
   ];
   return (
-    <div className="flex flex-col gap-10 max-w-[180px]">
+    <div className="flex flex-col gap-[59px] max-w-[180px]">
       {count > 1 ? (
         <>
           <button

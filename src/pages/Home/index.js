@@ -6,16 +6,23 @@ import Stepper from '../../components/Stepper'
 import Sidebar from '../../components/Sidebar'
 
 export default function index() {
-  const [ count, setCount ] = useState(3);
+  const [ count, setCount ] = useState(4);
   const downCount = () => {
     setCount(count - 1);
   }
   return (
-    <div>
-      <Sidebar count={count} />
-      <Stepper count={count} setCount = {setCount} />
-      <CourseDetail courseNo={count - 1} prev={downCount} />
-      <PersonalDetail />
+    <div className="flex flex-row gap-5 mt-10 justify-center">
+      <div className="flex flex-row gap-5 mt-10">
+        <Sidebar count={count} />
+        <Stepper count={count} setCount = {setCount} />
+      </div>
+      <div className="ml-[100px]">
+        {
+          count === 1 ? 
+          <PersonalDetail />:
+          <CourseDetail courseNo={count - 1} prev={downCount} />
+        }
+      </div>
     </div>
   )
 }
