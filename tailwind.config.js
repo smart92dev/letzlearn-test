@@ -8,6 +8,13 @@ module.exports = {
       colors: {
         'main': '#800080',
       },
+      ringWidth: {
+        'main': '2px',
+      },
+      ringColor: {
+        'main': '#800080',
+      },
+
       maxWidth: {
         '4/5': '80%',
         '9/10': '90%'
