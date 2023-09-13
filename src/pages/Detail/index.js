@@ -12,7 +12,7 @@ export default function index() {
         <PersonalDetailCard />
       </div>
       <div>
-        {Array.from({ length: stepData.length }, (_, i) => i + 1).map(
+        {Array.from({ length: stepData.length -1 }, (_, i) => i + 1).map(
           (data, index) => (
             <CourseDetailCard key = {index} courseNo={data} />  
           )

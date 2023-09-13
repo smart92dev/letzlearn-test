@@ -77,7 +77,7 @@ export default function index(props) {
             >
               Reason
             </th>
-            <td className="px-6 py-4">{reason}</td>
+            <td className="px-6 py-4 max-w-[270px] break-words">{reason}</td>
           </tr>
         </tbody>
       </table>

@@ -112,6 +112,7 @@ export default function index(props) {
     e.preventDefault();
     let res = checkValidation();
     if (res === true){
+      dispatch(nextStep({ level, name, skill, language, reason, courseNo }));
       setClickSubmit(false);
       navigate('/detail');
     }
