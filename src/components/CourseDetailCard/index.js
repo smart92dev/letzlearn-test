@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 export default function index(props) {
   const { courseNo } = props;
@@ -16,11 +15,11 @@ export default function index(props) {
     "Ten",
   ];
   const stepData = useSelector((state) => state.courseState.stepData);
-  const [level, setLevel] = useState(stepData[courseNo - 1].level);
-  const [name, setName] = useState(stepData[courseNo - 1].name);
-  const [skill, setSkill] = useState(stepData[courseNo - 1].skill);
-  const [language, setLanguage] = useState(stepData[courseNo - 1].language);
-  const [reason, setReason] = useState(stepData[courseNo - 1].reason);
+  const level = stepData[courseNo - 1].level;
+  const name = stepData[courseNo - 1].name;
+  const skill = stepData[courseNo - 1].skill;
+  const language = stepData[courseNo - 1].language;
+  const reason = stepData[courseNo - 1].reason;
 
   return (
     <div className="w-full max-w-md min-w-md p-4 bg-white border border-gray-200 rounded-2xl shadow-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">

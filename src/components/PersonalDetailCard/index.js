@@ -1,14 +1,13 @@
 import React from 'react'
-import { useState } from 'react'
 import { useSelector } from "react-redux";
 
 export default function index() {
   const personalData = useSelector((state) => state.userState.userData);
-  const [name, setName] = useState(personalData.name);
-  const [number, setNumber] = useState(personalData.number);
-  const [emailId, setEmailId] = useState(personalData.emailId);
-  const [country, setCountry] = useState(personalData.country);
-  const [stateAddress, setStateAddress] = useState(personalData.stateAddress);
+  const name = personalData.name;
+  const number = personalData.number;
+  const emailId = personalData.emailId;
+  const country = personalData.country;
+  const stateAddress = personalData.stateAddress;
   return (
     <div className="w-full max-w-md min-w-md p-4 bg-white border border-gray-200 rounded-2xl shadow-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
       <div>
